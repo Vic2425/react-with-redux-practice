@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import "./App.css";
+import logo from './logo.svg'
 import { connect } from "react-redux";
+import * as actionCreator from './store/actions/actions';
+// import * ( means All ) so we can apply it for dispatch w/o importing every variables.
 
 class App extends Component {
   render() {
@@ -11,6 +14,7 @@ class App extends Component {
         </div>
         <button onClick={this.props.onAgeUp}>Age UP</button>
         <button onClick={this.props.onAgeDown}>Age Down</button>
+        {this.props.loading && <img src={logo} className="App-logo" />}
       </div>
     );
   }
@@ -18,14 +22,15 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    age: state.age
+    age: state.age,
+    loading: state.loading
   };
 };
 
 const mapDispachToProps = dispatch => {
   return {
-    onAgeUp: () => dispatch({ type: "AGE_UP", value: 1 }),
-    onAgeDown: () => dispatch({ type: "AGE_DOWN", value: 1 })
+    onAgeUp: () => dispatch(actionCreator.ageUp(1)),
+    onAgeDown: () => dispatch(actionCreator.ageDown(1))
   };
 };
 export default connect(
